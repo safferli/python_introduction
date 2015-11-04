@@ -1,0 +1,241 @@
+---
+title       : Python introduction by a beginner
+subtitle    : 
+author      : Christoph Safferling
+job         : Head of Game Analytics, Ubisoft Blue Byte
+logo        : ubisoft.png
+biglogo     : bluebyte.jpg
+framework   : io2012        # revealjs  # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # zenburn, tomorrow
+widgets     : [bootstrap, mathjax]     # {[], mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+
+<!-- change title page for io2012 -->
+<!-- http://stackoverflow.com/questions/20875593/how-to-control-the-background-color-of-the-first-slidify-slide?rq=1 -->
+<style>
+.title-slide {
+  background-color: #93ADDB; /* #CBE7A5; #EDE0CF; #CA9F9D*/
+}
+
+.title-slide hgroup > h1{
+ font-family: 'Oswald', 'Helvetica', sanserif; 
+}
+
+.title-slide hgroup > h1, 
+.title-slide hgroup > h2 {
+  color: #535E43 ;  /* ; #EF5150*/
+}
+</style>
+
+<!-- set things for each slide:
+  --- .class #id &layout
+  The dot/hash syntax I use is a shortcut for commonly specified slide properties. So --- .myclass #myid would actually expand to --- {class: myclass, myid: id}. The long-form syntax is more flexible as you can specify any valid YAML after the --- including lists.
+  http://stackoverflow.com/questions/21530742/slidify-set-background-with-reveal-js-framework/21532277#21532277
+-->
+
+<!-- add image to titlepage
+  http://stackoverflow.com/questions/15251751/adding-an-image-to-title-slide-using-slidify/15254081#15254081
+-->
+
+<!-- source class is nice
+<div class='source'>
+  Source: <a href='http://www.subtlepatterns.com'>Background from SubtlePatterns</a>
+</div>
+-->
+
+
+
+## Python
+
+### Who speaks Python?
+
+> \<Sonium> someone speak python here?  
+> \<lucky> HHHHHSSSSSHSSS  
+> \<lucky> SSSSS  
+> \<Sonium> the programming language  
+<small>
+  <a href='http://bash.org/?400459', style='float: right;'>http://bash.org/?400459</a>
+</small>
+
+### The Zen of Python
+
+* Beautiful is better than ugly
+* Explicit is better than implicit
+* Readability counts
+* Special cases aren't special enough to break the rules.
+* &hellip;and more <small>(https://www.python.org/dev/peps/pep-0020/)</small>
+
+
+---
+
+## What is Python?
+
+> Python is a programming language that lets you work more quickly and integrate your systems more effectively. 
+<small>
+  (https://www.python.org/about/)
+</small>
+
+1. #7 most popular programming language <small>[(tiobe ranking)](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html)</small>
+1. CPython is the reference implementation, many others exist
+1. simple, yet powerful general purpose programming language
+1. code blocks are marked by _indentation_
+
+```{python}
+for i in range(1,4):
+  print("Hello World", i*"!", sep="")
+```
+
+> Hello World!<br/ >
+> Hello World!!<br/ >
+> Hello World!!!
+
+
+---
+
+## xkcd loves Python
+
+<center><img src="assets/img/python-353.png" width="450" /></center>
+
+<!--
+    --- &vcenter
+    ## Python
+    ![xkcd loves python](assets/img/python-353.png)
+    ---
+    ## testing
+    <img class=center src="assets/img/python-353.png"" height="10%" />
+    [http://xkcd.com/353/](http://xkcd.com/353/)
+-->
+
+
+--- 
+
+## Python2 vs Python3
+
+### what to use?
+
+<!-- Python 3.0 was released 2008-12-03 -->
+* Python2 was the standard a long time ago
+* Python3 is the future &ndash; since 2008 
+* yet, many program in Python2 still <small>[(survey)](https://wiki.python.org/moin/2.x-vs-3.x-survey)</small>
+* if you need to ask which version to use, use Python3
+
+### ffs, just use Python3!
+
+* full Unicode support
+* full Unicode support!
+* consistent print function
+* no leaking of loop-variables into the global namespace
+* future proof
+
+---
+
+### porting
+
+* you can `import` the future! 
+* some individual Python3 features can be imported into Python2
+
+```{python}
+from __future__ import print_function
+from __future__ import unicode_literals
+```
+
+<small>https://docs.python.org/3/howto/pyporting.html</small>
+
+
+--- 
+
+## Packages for everything!
+
+<!-- width="60%" is relative size -->
+<center><img src="assets/img/python-soul.png" width="70%" /></center>
+
+* a package is a "collection of modules": pre-made functionality
+* currently `r paste0(pypi, " (", pypi_date, ")")` packages listed in PyPI: <small>https://pypi.python.org/pypi</small>
+* Easter egg: the `_antigravity_` module is implemented!: <small>http://python-history.blogspot.de/2010/06/import-antigravity.html</small>
+
+
+---
+
+## Package management
+
+* pip is a package manager for all PyPI (python package index) packages
+* since python 3.4, pip is included by default
+
+```{python}
+$ pip install SomePackage
+  [...]
+  Successfully installed SomePackage
+```
+http://pip.readthedocs.org/en/latest/quickstart.html
+
+
+---
+
+## xmldataset
+
+> *xmldataset* is designed to make the process of gathering your desired data into a Python structure as simple as possible through its plaintext collection schema, deliminated just like Python!
+<small>
+  <a href='http://xmldataset.readthedocs.org/en/latest/', style='float: right;'>http://xmldataset.readthedocs.org/en/latest/</a>
+</small>
+
+
+```{python}
+profile_shop = """
+ShopItemConfigList
+    ShopItemConfigData
+        id = dataset:ShopItemConfigList
+        name = dataset:ShopItemConfigList"""
+```
+
+---
+
+### import libraries
+
+```{python}
+import pyodbc
+import pandas.io.sql
+import xmldataset
+from pandas import DataFrame
+```
+
+### query data
+
+
+```{python}
+# set up query
+query_shop = "SELECT data FROM dim_config",  
+    "WHERE created in (SELECT max(created) FROM dim_config)",  
+    "AND configName = 'ShopItemConfig'"
+# set up connection
+myconn = pyodbc.connect("DSN=" + "MMHO_CLB")
+# get data
+raw_shop = pandas.io.sql.read_sql(query_shop, myconn)['data'][0]
+myconn.close()
+```
+
+---
+
+### set up xml
+
+```{python}
+profile_shop = """
+ShopItemConfigList
+    ShopItemConfigData
+        id = dataset:ShopItemConfigList
+        name = dataset:ShopItemConfigList"""
+```
+
+### parse xml
+
+```{python}
+df_shop = xmldataset.parse_using_profile(raw_shop, profile_shop)
+df_shop = DataFrame(df_shop['ShopItemConfigList'])
+```
+
+
+
+

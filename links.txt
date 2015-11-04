@@ -1,0 +1,9 @@
+python has implemented the _antigravity_ module: http://python-history.blogspot.de/2010/06/import-antigravity.html
+
+http://python3wos.appspot.com/
+
+https://wiki.python.org/moin/2.x-vs-3.x-survey
+
+http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html
+
+https://github.com/dlam26/slidify/blob/master/demo-responsive.html
